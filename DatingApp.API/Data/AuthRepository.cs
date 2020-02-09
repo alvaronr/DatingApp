@@ -43,6 +43,7 @@ namespace DatingApp.API.Data
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.UserName = user.UserName.ToLower();
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();  
