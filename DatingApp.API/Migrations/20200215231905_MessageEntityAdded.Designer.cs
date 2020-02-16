@@ -3,14 +3,16 @@ using System;
 using DatingApp.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatingApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200215231905_MessageEntityAdded")]
+    partial class MessageEntityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,10 @@ namespace DatingApp.API.Migrations
                     b.Property<DateTime>("MessageSent")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("RecipientDeleted")
+                    b.Property<bool>("RecepientDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("RecepientId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RecipientId")
@@ -63,7 +68,7 @@ namespace DatingApp.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipientId");
+                    b.HasIndex("RecepientId");
 
                     b.HasIndex("SenderId");
 
@@ -182,11 +187,10 @@ namespace DatingApp.API.Migrations
 
             modelBuilder.Entity("DatingApp.API.Models.Message", b =>
                 {
-                    b.HasOne("DatingApp.API.Models.User", "Recipient")
+                    b.HasOne("DatingApp.API.Models.User", "Recepient")
                         .WithMany("MessagesReceived")
-                        .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("RecepientId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("DatingApp.API.Models.User", "Sender")
                         .WithMany("MessagesSent")
