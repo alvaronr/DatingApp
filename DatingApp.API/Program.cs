@@ -26,7 +26,7 @@ namespace DatingApp.API
                     context.Database.Migrate();
                     Seed.SeedUsers(context);
                 }
-                catch (Exception ex)
+                catch
                 {
                     var logger = services.GetService<ILogger<Program>>();
                     logger.LogError("Exception occurred during migration");
